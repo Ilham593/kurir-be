@@ -5,7 +5,10 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "*" // Mengizinkan semua domain (termasuk domain frontend vercel kamu)
+}));
+
 app.use(express.json());
 
 const atlasURI = process.env.MONGODB_URI; 
