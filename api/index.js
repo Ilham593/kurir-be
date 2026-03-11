@@ -1,4 +1,4 @@
-require('dotenv').config(); // Tambahkan ini di baris 1
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -8,9 +8,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// LOGIKA FALLBACK: 
-// Jika di Vercel, pakai process.env.MONGODB_URI
-// Jika di lokal dan .env belum kebaca, pakai string manual
 const atlasURI = process.env.MONGODB_URI || "mongodb+srv://sd43bkl:5LU4jpvqSysAdMDo@sd.lfice1a.mongodb.net/kurir_db"; 
 
 mongoose.connect(atlasURI)
@@ -26,6 +23,16 @@ const LocationSchema = new mongoose.Schema({
 }, { collection: 'mpas' });
 
 const Location = mongoose.model('Location', LocationSchema);
+
+// --- TAMBAHKAN INI UNTUK TEST ---
+app.get('/', (req, res) => {
+  res.json({ 
+    status: "Online", 
+    message: "Backend Kurir Map Berhasil Berjalan di Vercel!",
+    endpoints: ["/api/locations"]
+  });
+});
+// -------------------------------
 
 app.get('/api/locations', async (req, res) => {
   try {
@@ -53,7 +60,6 @@ app.delete('/api/locations/:id', async (req, res) => {
   } catch (err) { res.status(500).json(err); }
 });
 
-// Hanya untuk jalan di lokal (Vercel tidak butuh ini, tapi tidak apa-apa ada di sini)
 if (process.env.NODE_ENV !== 'production') {
     const PORT = 5000;
     app.listen(PORT, '0.0.0.0', () => console.log(`🚀 Lokal jalan di port ${PORT}`));
