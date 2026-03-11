@@ -6,9 +6,8 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-  origin: "*" // Mengizinkan semua domain (termasuk domain frontend vercel kamu)
+  origin: ["http://localhost:5173", "https://kurir-fe.vercel.app"] 
 }));
-
 app.use(express.json());
 
 const atlasURI = process.env.MONGODB_URI; 
