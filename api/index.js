@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const atlasURI = process.env.MONGODB_URI || "mongodb+srv://sd43bkl:5LU4jpvqSysAdMDo@sd.lfice1a.mongodb.net/kurir_db"; 
+const atlasURI = process.env.MONGODB_URI; 
 
 mongoose.connect(atlasURI)
   .then(() => console.log('✅ Atlas Terkoneksi'))
